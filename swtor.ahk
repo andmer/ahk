@@ -1,246 +1,95 @@
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+#NoEnv                       ; Recommended for performance and compatibility with future AutoHotkey releases.
+SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+;SetKeyDelay, 5, 5
 
 HotKey, LButton, Toggle
 HotKey, RButton, Toggle
-mouseLook=0
+mouseLook:=0
+breakout:=false
 
-$LButton::
-	Send {1}
-Return
+k4:="'|4|,|+4|^4|."
+k5:="5|+5"
+$LButton::SpamKey(k4)
+$RButton::SpamKey(k5)
+$0::SpamKey("0")
+$1::SpamKey("1|+1|^1")
+$2::SpamKey("2")
+$3::SpamKey("3|+3")
+$4::SpamKey(k4)
+$5::SpamKey(k5)
+$6::SpamKey("6|+6")
+$7::SpamKey("7")
+$8::SpamKey("8|+8")
+$9::SpamKey("9|+9|^9")
 
-$RButton::
-	Send {2}
-Return
-
-$F1::
-IfWinActive, Star Wars: The Old Republic
+SpamKey(list)
 {
-	If (mouseLook=0)
-	{
-		Send {RButton Down}
-		mouseLook:=1
-		HotKey, LButton, Toggle
-		HotKey, RButton, Toggle
-		Return
-	}
-	Else
-	{
+    Hotkey := RegExReplace(A_ThisHotkey,"^(\w* & |\W*)")
+    IfWinActive, ahk_class PlayerClient
+    {
+        stringsplit, list, list,`|
+        Counter:=0
+        global breakout := false
+        While, GetKeyState(Hotkey, "p") {
+            If(breakout)
+            {
+                break
+            }
+            Counter := (Counter=list0) ? (1) : (Counter+1)
+            Send % list%counter%
+            Sleep 50
+        }
+        Return
+    }
+    Else
+    {
+        Send {%Hotkey%}
+        Return
+    }
+}
+
+#IfWinActive, ahk_class PlayerClient
+    $`::
+    If (mouseLook=0)
+    {
+	    Send {RButton Down}
+	    mouseLook:=1
+        HotKey, LButton, Toggle
+        HotKey, RButton, Toggle
+        Return
+    }
+    Else
+    {
 		Send {RButton up}
-		mouseLook:=0
-		HotKey, LButton, Toggle
-		HotKey, RButton, Toggle
-		Return
-	}
-	Return
-}
-Else
-{
-	Send {F1}
-	return
-}
+        mouseLook:=0
+        HotKey, LButton, Toggle
+        HotKey, RButton, Toggle
+        Return
+    }
+    Return
 
-~RButton & LButton::
-IfWinActive, Star Wars: The Old Republic
-{
-	If (mouseLook=0)
-	{
-		Send {RButton Down}
-		mouseLook:=1
-		HotKey, LButton, Toggle
-		HotKey, RButton, Toggle
-		Return
-	}
-	Else
-	{
-		Send {RButton up}
-		mouseLook:=0
-		HotKey, LButton, Toggle
-		HotKey, RButton, Toggle
-		Return
-	}
-	Return
-}
+    $Esc::
+    if(breakout)
+    {
+        Send {Escape}
+    }
+    if(!breakout)
+    {
+        breakout := true
+    }
+    if(mouseLook)
+    {
+        mouseLook:=0
+        HotKey, LButton, Toggle
+        HotKey, RButton, Toggle
+    }
+    Return
+#IfWinActive
 
-$0::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("0", "P")
-     break
-    Send {Blind}{0}
-    Send {Blind}{1}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {0}
-	return
-}
-
-$1::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("1", "P")
-     break
-    Send {Blind}{1}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {1}
-	return
-}
-
-
-$2::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("2", "P")
-     break
-    Send {Blind}{2}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {2}
-	return
-}
-
-$3::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("3", "P")
-     break
-    Send {Blind}{3}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {3}
-	return
-}
-
-$4::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("4", "P")
-     break
-    Send {Blind}{4}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {4}
-	return
-}
-
-$5::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("5", "P")
-     break
-    Send {Blind}{5}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {5}
-	return
-}
-
-$6::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("6", "P")
-     break
-    Send {Blind}{6}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {6}
-	return
-}
-
-$7::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("7", "P")
-     break
-    Send {Blind}{7}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {7}
-	return
-}
-
-$8::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("8", "P")
-     break
-    Send {Blind}{8}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {8}
-	return
-}
-
-$9::
-IfWinActive, Star Wars: The Old Republic
-{
-  Loop
-  {
-   if not GetKeyState("9", "P")
-     break
-    Send {Blind}{9}
-    sleep 100
-   }
-return
-}
-Else
-{
-	Send {9}
-	return
-}
+;~$LButton::
+;    While GetKeyState("LButton","P"){
+;        Click
+;        Sleep 50  ;  milliseconds
+;    }
+;return
