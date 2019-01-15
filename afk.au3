@@ -6,9 +6,9 @@ WEnd
 Func Movment()
     While 1
         Sleep(20000)
-        Send("{A}")
+        Send("{W}")
         Sleep(40000)
-        Send("{D}")
+        Send("{S}")
 
     WEnd
 EndFunc

@@ -1,14 +1,14 @@
 #NoEnv                       ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-;#MaxThreads 1
+;#MaxThreads 2
 ;SetKeyDelay, 5, 5
 
 breakout:=false
 
-~PgDn::Suspend, Toggle
-
-*1::SpamKey("1")
+$Pause:: Suspend, Off
+!Pause:: Suspend, On
+*mbutton::breakout=true
 
 SpamKey2(list,hotkey)
 {
@@ -25,9 +25,9 @@ SpamKey2(list,hotkey)
             }
             Counter:=(Counter=list0) ? (1) : (Counter+1)
             key:=% list%counter%
-			Send,{Blind}%key%
+	    Send,{Blind}%key%
             ;Send % list%counter% 
-            Sleep 100
+            Sleep 60
         }
         Return
     }
@@ -44,16 +44,16 @@ SpamKey(list)
     {
         stringsplit, list, list,`|
         Counter:=0
-        global breakout:=false
+        global breakout2:=false
         While, GetKeyState(Hotkey, "p") {
-            If (breakout)
+            If (breakout2)
             {
                 break
             }
             Counter:=(Counter=list0) ? (1) : (Counter+1)
             key:=% list%counter%
             Send,{Blind}%key%
-            Sleep 100
+            Sleep 60
         }
         Return
     }
@@ -65,19 +65,23 @@ SpamKey(list)
 }
 
 #IfWinActive, ahk_class GxWindowClass
+    *1::SpamKey("1")
+    *2::SpamKey("2")
+    *3::SpamKey("3")
+    *4::SpamKey("4")
+    *f::SpamKey("f|4")
+    *r::SpamKey("r")
+
     $Esc::
         if (breakout)
         {
             Send {Escape}
         }
-        if (!breakout)
-        {
-            breakout:=true
-        }
+        breakout:=true        
     Return
 
   	~RButton & LButton::
-		SpamKey2("1", "LButton")
+		SpamKey2("-", "LButton")
 	Return
  
  #IfWinActive
