@@ -62,11 +62,11 @@ SpamKeyLoop(list,hotkey)
 	        Send,{Blind}%key%
             if (counter = list0)
             {
-                Sleep 800
+                Sleep 1200
             } 
             else 
             {
-                Sleep 100
+                Sleep 0
             }
         }
         Return
@@ -103,11 +103,11 @@ SpamKey(list,spam)
             {
                 if (counter = list0)
                 {
-                    Sleep 800
+                    Sleep 1200
                 } 
                 else 
                 {
-                    Sleep 100
+                    Sleep 0
                 }
             }
         }
@@ -166,7 +166,8 @@ SpamKey(list,spam)
     Return
 
   	~RButton & LButton::
-		SpamKeyLoop("1|1|2|3|4|5|6", "LButton")
+		SpamKeyLoop("1|1|1|2|3|4|5|6|7", "LButton")
+        ;SpamKeyLoop("-", "LButton")
 	Return
 
     ;flag return spam
