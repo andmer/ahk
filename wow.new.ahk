@@ -2,14 +2,11 @@
 SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxThreadsPerHotkey 1
-;#MaxThreads 2
-;SetKeyDelay, 5, 5
-;ToolTip, Multiline`nTooltip,(A_ScreenWidth // 2), (A_ScreenHeight // 2)
 HotKey, LButton, Off
 HotKey, RButton, Off
 ;$LButton::Click
-$LButton::SpamKey("-")
-$RButton::SpamKey("f|2|3")
+$LButton::SpamKey("6|1|2|3|4|5", false)
+$RButton::SpamKey("6|r", true)
 
 breakout:=false
 mouseLook:=false
@@ -45,8 +42,9 @@ SplashTextOff
 return
 
 
-SpamKey2(list,hotkey)
+SpamKeyLoop(list,hotkey)
 {
+    WinGet, wowid, List, World of Warcraft 
     Hotkey:=RegExReplace(hotkey,"^(\w* & |\W*)")
     IfWinActive, ahk_class GxWindowClass
     {
@@ -60,14 +58,15 @@ SpamKey2(list,hotkey)
             }
             Counter:=(Counter=list0) ? (1) : (Counter+1)
             key:=% list%counter%
+            ;ControlSend,, {Blind}%key%, ahk_id %wowid1%
 	        Send,{Blind}%key%
-            if (counter = 6)
+            if (counter = list0)
             {
-                Sleep 1200
+                Sleep 800
             } 
             else 
             {
-                Sleep 60
+                Sleep 100
             }
         }
         Return
@@ -78,8 +77,9 @@ SpamKey2(list,hotkey)
         Return
     }
 }
-SpamKey(list)
+SpamKey(list,spam)
 {
+    WinGet, wowid, List, World of Warcraft 
     Hotkey:=RegExReplace(A_ThisHotkey,"^(\w* & |\W*)")
     IfWinActive, ahk_class GxWindowClass
     {
@@ -93,14 +93,22 @@ SpamKey(list)
             }
             Counter:=(Counter=list0) ? (1) : (Counter+1)
             key:=% list%counter%
+            ;ControlSend,, {Blind}%key%, ahk_id %wowid1%
             Send,{Blind}%key%
-            if (counter = 6)
+            if (spam)
             {
-                Sleep 1200
-            } 
+                Sleep 60                
+            }
             else 
             {
-                Sleep 60
+                if (counter = list0)
+                {
+                    Sleep 800
+                } 
+                else 
+                {
+                    Sleep 100
+                }
             }
         }
         Return
@@ -113,13 +121,13 @@ SpamKey(list)
 }
 
 #IfWinActive, ahk_class GxWindowClass
-    *1::SpamKey("f|1")
-    *2::SpamKey("f|2")
-    *3::SpamKey("f|3")
-    *4::SpamKey("f|4")
-    *5::SpamKey("f|2|3|4|5")
-    *f::SpamKey("f|1|2|3|4|5")
-    *r::SpamKey("f|r")
+    *1::SpamKey("1",true)
+    *2::SpamKey("2",true)
+    *3::SpamKey("3",true)
+    *4::SpamKey("4",true)
+    *5::SpamKey("5",false)
+    *f::SpamKey("3|f",true)
+    *!r::SpamKey("r",true)
 
     $`::
     If (mouseLook)
@@ -158,14 +166,14 @@ SpamKey(list)
     Return
 
   	~RButton & LButton::
-		SpamKey2("f|1|2|3|4|5", "LButton")
+		SpamKeyLoop("1|1|2|3|4|5|6", "LButton")
 	Return
 
     ;flag return spam
     ~!LButton::
         While GetKeyState("LButton","P"){
             Click
-            Sleep 50  ;  milliseconds
+            Sleep 50
         }
     return
  
