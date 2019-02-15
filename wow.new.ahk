@@ -5,11 +5,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 HotKey, LButton, Off
 HotKey, RButton, Off
 ;$LButton::Click
-$LButton::SpamKey("6|1|2|3|4|5", false)
-$RButton::SpamKey("6|r", true)
+;$LButton::SpamKey("1|1|1|2|3|4|5|6|7", false)
+$LButton::SpamKey("1|2|3|4|5", false)
+$RButton::SpamKey("f", true)
 
-breakout:=false
-mouseLook:=false
+global breakout:=false
+global breakout2:=false
+global mouseLook:=false
 
 *mbutton::
 breakout=true
@@ -42,7 +44,7 @@ SplashTextOff
 return
 
 
-SpamKeyLoop(list,hotkey)
+Loop(list,hotkey)
 {
     WinGet, wowid, List, World of Warcraft 
     Hotkey:=RegExReplace(hotkey,"^(\w* & |\W*)")
@@ -50,7 +52,7 @@ SpamKeyLoop(list,hotkey)
     {
         stringsplit, list, list,`|
         Counter:=0
-        global breakout:=false
+        breakout:=false
         While, true {
             If (breakout)
             {
@@ -62,7 +64,7 @@ SpamKeyLoop(list,hotkey)
 	        Send,{Blind}%key%
             if (counter = list0)
             {
-                Sleep 1200
+                Sleep 100
             } 
             else 
             {
@@ -85,7 +87,7 @@ SpamKey(list,spam)
     {
         stringsplit, list, list,`|
         Counter:=0
-        global breakout2:=false
+        breakout2:=false
         While, GetKeyState(Hotkey, "p") {
             If (breakout2)
             {
@@ -97,13 +99,13 @@ SpamKey(list,spam)
             Send,{Blind}%key%
             if (spam)
             {
-                Sleep 60                
+                Sleep 10              
             }
             else 
             {
                 if (counter = list0)
                 {
-                    Sleep 1200
+                    Sleep 800
                 } 
                 else 
                 {
@@ -125,8 +127,9 @@ SpamKey(list,spam)
     *2::SpamKey("2",true)
     *3::SpamKey("3",true)
     *4::SpamKey("4",true)
-    *5::SpamKey("5",false)
-    *f::SpamKey("3|f",true)
+    *5::SpamKey("5",true)
+    *f::SpamKey("f",true)
+    *x::SpamKey("x",true)
     *!r::SpamKey("r",true)
 
     $`::
@@ -166,16 +169,18 @@ SpamKey(list,spam)
     Return
 
   	~RButton & LButton::
-		SpamKeyLoop("1|1|1|2|3|4|5|6|7", "LButton")
-        ;SpamKeyLoop("-", "LButton")
+		Loop("1|2|3|4|5|6", "LButton") ; prot
+        ;Loop("2|3|4|5|6", "LButton") ; arms
+		;Loop("1|2|3|4|5|6|7", "LButton") ; fury
+        ;Loop("-", "LButton")
 	Return
 
     ;flag return spam
-    ~!LButton::
-        While GetKeyState("LButton","P"){
-            Click
-            Sleep 50
-        }
-    return
+    ; ~!RButton::
+    ;     While GetKeyState("RButton","P"){
+    ;         Click
+    ;         Sleep 50
+    ;     }
+    ; return
  
  #IfWinActive
