@@ -65,7 +65,7 @@ Loop(list,hotkey)
             if (counter = list0)
             {
                 Sleep 100
-            } 
+            }
             else 
             {
                 Sleep 0
@@ -97,21 +97,7 @@ SpamKey(list,spam)
             key:=% list%counter%
             ;ControlSend,, {Blind}%key%, ahk_id %wowid1%
             Send,{Blind}%key%
-            if (spam)
-            {
-                Sleep 10              
-            }
-            else 
-            {
-                if (counter = list0)
-                {
-                    Sleep 800
-                } 
-                else 
-                {
-                    Sleep 0
-                }
-            }
+            Sleep 50              
         }
         Return
     }
@@ -128,9 +114,9 @@ SpamKey(list,spam)
     *3::SpamKey("3",true)
     *4::SpamKey("4",true)
     *5::SpamKey("5",true)
-    *f::SpamKey("f",true)
-    *x::SpamKey("x",true)
-    *!r::SpamKey("r",true)
+    ;*f::SpamKey("f",true)
+    ;*x::SpamKey("x",true)
+    ;*!r::SpamKey("r",true)
 
     $`::
     If (mouseLook)
@@ -169,9 +155,9 @@ SpamKey(list,spam)
     Return
 
   	~RButton & LButton::
-		Loop("1|2|3|4|5|6", "LButton") ; prot
+		;Loop("!1|!2|6|5|3|2", "LButton") ; prot
         ;Loop("2|3|4|5|6", "LButton") ; arms
-		;Loop("1|2|3|4|5|6|7", "LButton") ; fury
+		Loop("7|!4|3|4|5|6", "LButton") ; fury
         ;Loop("-", "LButton")
 	Return
 
