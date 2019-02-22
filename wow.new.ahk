@@ -12,6 +12,7 @@ $RButton::SpamKey("f", true)
 global breakout:=false
 global breakout2:=false
 global mouseLook:=false
+global suspended:=false
 
 *mbutton::
 breakout=true
@@ -29,14 +30,16 @@ Return
 
 $Pause::
 Suspend, Off
+suspended:=false
 SplashTextOn, , , ACTIVE
 SetTimer, RemoveToolTip, -500
 Return
 
 !Pause::
 Suspend, On
+suspended:=true
 SplashTextOn, , , PAUSED
-SetTimer, RemoveToolTip, -500
+;SetTimer, RemoveToolTip, -500
 Return
 
 RemoveToolTip:
@@ -64,7 +67,7 @@ Loop(list,hotkey)
 	        Send,{Blind}%key%
             if (counter = list0)
             {
-                Sleep 100
+                Sleep 50
             }
             else 
             {
@@ -97,7 +100,7 @@ SpamKey(list,spam)
             key:=% list%counter%
             ;ControlSend,, {Blind}%key%, ahk_id %wowid1%
             Send,{Blind}%key%
-            Sleep 50              
+            Sleep 100              
         }
         Return
     }
@@ -109,14 +112,62 @@ SpamKey(list,spam)
 }
 
 #IfWinActive, ahk_class GxWindowClass
+    
+    ~/::
+    Suspend On
+    SplashTextOn, , , PAUSED    
+    Return
+
+    ~Return::
+    Suspend
+    if (!A_IsSuspended) 
+    {
+        suspended:=false
+        SetTimer, RemoveToolTip, -500
+    }
+    else 
+    {
+        suspended:=true
+        SplashTextOn, , , PAUSED    
+    }
+    Return
+
     *1::SpamKey("1",true)
     *2::SpamKey("2",true)
     *3::SpamKey("3",true)
     *4::SpamKey("4",true)
     *5::SpamKey("5",true)
-    ;*f::SpamKey("f",true)
-    ;*x::SpamKey("x",true)
-    ;*!r::SpamKey("r",true)
+    *a::SpamKey("a",true)
+    *s::SpamKey("s",true)
+    *d::SpamKey("d",true)
+    *f::SpamKey("f",true)
+    *z::SpamKey("z",true)
+    *x::SpamKey("x",true)
+    ;*c::SpamKey("c",true)
+    *r::SpamKey("r",true)
+    *v::SpamKey("v",true)
+
+    $1 up::
+    breakout2:=true    
+    Return
+    $2 up::
+    breakout2:=true    
+    Return
+    $3 up::
+    breakout2:=true    
+    Return
+    $4 up::
+    breakout2:=true    
+    Return
+    $5 up::
+    breakout2:=true    
+    Return
+    $f up::
+    breakout2:=true    
+    Return
+    $x up::
+    breakout2:=true    
+    Return
 
     $`::
     If (mouseLook)
@@ -138,6 +189,8 @@ SpamKey(list,spam)
     Return
 
     $Esc::
+        Suspend Off
+        SetTimer, RemoveToolTip, -500
         if (breakout = true)
         {
             Send {Escape}
@@ -156,17 +209,17 @@ SpamKey(list,spam)
 
   	~RButton & LButton::
 		;Loop("!1|!2|6|5|3|2", "LButton") ; prot
-        ;Loop("2|3|4|5|6", "LButton") ; arms
-		Loop("7|!4|3|4|5|6", "LButton") ; fury
+        Loop("5|2|3|4|6", "LButton") ; arms
+		;Loop("a|1|2|3|4|5|6", "LButton") ; fury
         ;Loop("-", "LButton")
 	Return
 
     ;flag return spam
-    ; ~!RButton::
-    ;     While GetKeyState("RButton","P"){
-    ;         Click
-    ;         Sleep 50
-    ;     }
-    ; return
+     ;~!RButton::
+     ;    While GetKeyState("RButton","P"){
+     ;        Click
+     ;        Sleep 50
+     ;    }
+     ;return
  
  #IfWinActive
