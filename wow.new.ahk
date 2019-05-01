@@ -1,13 +1,29 @@
 #NoEnv                       ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-#MaxThreadsPerHotkey 1
+;#MaxThreadsPerHotkey 1
 HotKey, LButton, Off
 HotKey, RButton, Off
 ;$LButton::Click
 ;$LButton::SpamKey("1|1|1|2|3|4|5|6|7", false)
 $LButton::SpamKey("1|2|3|4|5", false)
 $RButton::SpamKey("f", true)
+; $LButton::
+; IfWinActive, ahk_class GxWindowClass
+; {
+;     Send {q Down}
+; }
+; Return
+
+; $RButton::
+; IfWinActive, ahk_class GxWindowClass
+; {
+;     Send {e Down}
+; }
+; Return
+
+Input, SingleKey, L1
+MsgBox You pressed %SingleKey%.
 
 global breakout:=false
 global breakout2:=false
@@ -46,7 +62,6 @@ RemoveToolTip:
 SplashTextOff
 return
 
-
 Loop(list,hotkey)
 {
     WinGet, wowid, List, World of Warcraft 
@@ -57,6 +72,10 @@ Loop(list,hotkey)
         Counter:=0
         breakout:=false
         While, true {
+            If (suspended) 
+            {
+                Continue
+            }
             If (breakout)
             {
                 break
@@ -67,11 +86,7 @@ Loop(list,hotkey)
 	        Send,{Blind}%key%
             if (counter = list0)
             {
-                Sleep 50
-            }
-            else 
-            {
-                Sleep 0
+                Sleep 200
             }
         }
         Return
@@ -92,6 +107,10 @@ SpamKey(list,spam)
         Counter:=0
         breakout2:=false
         While, GetKeyState(Hotkey, "p") {
+            If (suspended) 
+            {
+                Continue
+            }
             If (breakout2)
             {
                 break
@@ -100,7 +119,7 @@ SpamKey(list,spam)
             key:=% list%counter%
             ;ControlSend,, {Blind}%key%, ahk_id %wowid1%
             Send,{Blind}%key%
-            Sleep 100              
+            Sleep 50              
         }
         Return
     }
@@ -112,7 +131,7 @@ SpamKey(list,spam)
 }
 
 #IfWinActive, ahk_class GxWindowClass
-    
+
     ~/::
     Suspend On
     SplashTextOn, , , PAUSED    
@@ -140,33 +159,48 @@ SpamKey(list,spam)
     *a::SpamKey("a",true)
     *s::SpamKey("s",true)
     *d::SpamKey("d",true)
-    *f::SpamKey("f",true)
     *z::SpamKey("z",true)
     *x::SpamKey("x",true)
-    ;*c::SpamKey("c",true)
     *r::SpamKey("r",true)
     *v::SpamKey("v",true)
+    *F1::SpamKey("{f1}",true)
+
+    ; $LButton up::
+    ; Send {q Up}
+    ; Return
+
+    ; $RButton up::
+    ; Send {e Up}
+    ; Return
+
+    ~1::
+    ~2::
+    ~3::
+    ~4::
+    ~5::
+    ~a::
+    ~d::
+    ~z::
+    ~r::
+    ~v::
+    ~x::
+    breakout2:=true    
+    suspended:=true
+    Return
 
     $1 up::
-    breakout2:=true    
-    Return
     $2 up::
-    breakout2:=true    
-    Return
     $3 up::
-    breakout2:=true    
-    Return
     $4 up::
-    breakout2:=true    
-    Return
     $5 up::
-    breakout2:=true    
-    Return
-    $f up::
-    breakout2:=true    
-    Return
+    $a up::
+    $d up::
+    $z up::
+    $r up::
+    $v up::
     $x up::
     breakout2:=true    
+    suspended:=false
     Return
 
     $`::
@@ -194,6 +228,7 @@ SpamKey(list,spam)
         if (breakout = true)
         {
             Send {Escape}
+            Send {F12}
             Return
         }
         breakout:=true   
@@ -208,9 +243,10 @@ SpamKey(list,spam)
     Return
 
   	~RButton & LButton::
-		;Loop("!1|!2|6|5|3|2", "LButton") ; prot
-        Loop("5|2|3|4|6", "LButton") ; arms
-		;Loop("a|1|2|3|4|5|6", "LButton") ; fury
+		;Loop("!1|!2|6|5|3|!4", "LButton") ; prot
+        ;Loop("!1|5|2|3|4|6", "LButton") ; arms
+	    Loop("a|1|2|3|4|5", "LButton") ; fury
+        ;Loop("a|1|2|3|4", "LButton") ; pally prot
         ;Loop("-", "LButton")
 	Return
 
@@ -223,3 +259,4 @@ SpamKey(list,spam)
      ;return
  
  #IfWinActive
+ 

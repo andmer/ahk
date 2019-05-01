@@ -21,7 +21,7 @@ RemoveToolTip:
 SplashTextOff
 return
 
-$ScrollLock::SpamKeyLoop("w|{Space}|s", "LButton")
+$ScrollLock::SpamKeyLoop("w|{Space}", "LButton")
 
 SpamKeyLoop(list,hotkey)
 {
