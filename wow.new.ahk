@@ -120,8 +120,8 @@ SpamKey2(list,spam,hotkey)
     Return
 
     ;~RButton & LButton::SpamKey2("a|1|2|3|4|5", true, "RButton") ;fury
-    ~RButton & LButton::SpamKey2("!1|d|1|2|3|4", true, "RButton") ;ret
-	;*0::SpamKey2("d|t|f|!1|d|1|2|3|4", true, "0") ;ret
+    ;~RButton & LButton::SpamKey2("!1|d|1|2|3|4", true, "RButton") ;ret
+	;~RButton & LButton::SpamKey2("d|t|5|6|d|1|2|3|4", true, "RButton") ;ret
 /*     
     *1::SpamKey("1",true)
     *2::SpamKey("2",true)
@@ -181,7 +181,6 @@ SpamKey2(list,spam,hotkey)
     breakout2:=true    
     suspended:=false
     Return
-*/
 
     $`::
     If (mouseLook)
@@ -201,6 +200,7 @@ SpamKey2(list,spam,hotkey)
         Return
     }
     Return
+*/
 
     $Esc::
         Suspend Off
@@ -222,14 +222,14 @@ SpamKey2(list,spam,hotkey)
         }
     Return
 
-    /*
+    
   	~RButton & LButton::
 		;Loop("!1|!2|6|5|3|!4", "LButton") ; prot
         ;Loop("!1|5|2|3|4|6", "LButton") ; arms
 	    ;Loop("a|1|2|3|4|5", "LButton") ; fury
         ;Loop("a|1|2|3|4", "LButton") ; pally prot
-        ;Loop("t|f|!1|d|1|2|3|4", "LButton") ; pally ret
-        Loop("!1|d|1|2|3|4", "LButton") ; pally ret
+        ;Loop("t|f|!1|d|1|2|3|4", "LButton") ; pally ret        
+        Loop("d|t|5|6|d|1|2|3|4", "LButton") ; pally ret
         ;Loop("-", "LButton")
 	Return
    

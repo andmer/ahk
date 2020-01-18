@@ -1,6 +1,7 @@
 #NoEnv                       ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SetControlDelay -1
 breakout:=false
 
 ^!r::Reload
@@ -21,7 +22,9 @@ RemoveToolTip:
 SplashTextOff
 return
 
+;$ScrollLock::SpamKeyLoop("{Space}", "LButton")
 $ScrollLock::SpamKeyLoop("w|{Space}", "LButton")
+
 
 SpamKeyLoop(list,hotkey)
 {
@@ -39,6 +42,18 @@ SpamKeyLoop(list,hotkey)
             }
             Counter:=(Counter=list0) ? (1) : (Counter+1)
             key:=% list%counter%
+            ;Click 926,983
+            ;Sleep 1000
+
+            ; Click 986,755
+            ; Sleep 1000
+            ; Click 973,292, right
+            ; Sleep 2000
+            ; Click 195,328
+            ; Sleep 2000
+            ; Click 251,667
+            ; Sleep 5000
+            ; Click 872,245
             ControlSend,, {Blind}%key%, ahk_id %wowid1%
 	        ;Send,{Blind}%key%
             if (counter = list0)
