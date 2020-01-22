@@ -36,7 +36,7 @@ Return
         suspended:=false
     Return
 
-~RButton & LButton::SpamKey2("6|f|2|3", "RButton")
+~RButton & LButton::SpamKey2("f|2|3", "RButton")
 
 ; charge,intercept,execute,overpower,mortal strike,whirlwind
 $1::SpamKey("1")
