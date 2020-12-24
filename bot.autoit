@@ -1,0 +1,365 @@
+; __      __            .__       .___         _____ 
+;/  \    /  \___________|  |    __| _/   _____/ ____\
+;\   \/\/   /  _ \_  __ \  |   / __ |   /  _ \   __\ 
+; \        (  <_> )  | \/  |__/ /_/ |  (  <_> )  |   
+;  \__/\  / \____/|__|  |____/\____ |   \____/|__|   
+;       \/                         \/                
+; __      __                                    _____  __   
+;/  \    /  \_____ _______   ________________ _/ ____\/  |_ 
+;\   \/\/   /\__  \\_  __ \_/ ___\_  __ \__  \\   __\\   __\
+; \        /  / __ \|  | \/\  \___|  | \// __ \|  |   |  |  
+;  \__/\  /  (____  /__|    \___  >__|  (____  /__|   |__|  
+;       \/        \/            \/           \/             
+;/###########################################################\
+; Zbot Battleground Honor Farming Bot  		Created by: =Z=  #
+;************************************************************#
+;															 #
+; Special Thanks to Drek for additions!						 #
+;															 #
+;*************												 #
+; Description 												 #
+;*************											     #
+; This bot will queue for BGs and use anti-afk measures.	 #
+; You will be prompted for instructions to setup the bot     #
+; follow the tooltips / prompts, tooltips are in top left	 #
+; corner.													 #
+;															 #
+;*************												 #
+; Features													 #
+;*************												 #
+; • Anti-AFK												 #
+; • Basic navigation (extra nav routes provided by Drek)	 #
+; • Death-checking + releasing								 #
+; • Auto BG queuing / detecting								 #
+; • BG end detection and re-queing							 #
+; • Deserter debuff check									 #
+;\###########################################################/
+
+
+;DO NOT TOUCH - ALTERING THESE WILL BREAK THE MACRO
+Global $join[2] ; position of button to click
+Global $colour = 14684936 ; the decimal color of the buttons
+Global $bgnum = 0; battleground number
+Global $bgnav ; battleground navigation
+Global $recount = 0
+Global $checkdebuff
+
+;MAIN MACRO
+WinActivate("World of Warcraft") ; activate window
+ToolTip("Opening WoW window...", 0, 0); displays tooltip in top left corner
+WinWaitActive("World of Warcraft") ; wait untill the window is active
+
+While 1
+WinWaitActive("World of Warcraft")
+ToolTip("Executing script...", 0, 0) ; displays tooltip in top left corner
+Sleep (2000)
+	Prep()
+Wend
+
+;Prep functions - sets up options
+Func Prep()
+	ToolTip("Setting up coordinates, prepare for further instructions...", 0, 0) ; displays tooltip in top left corner
+	Sleep (500)
+	ToolTip("Opening BG window...", 0, 0) ; displays tooltip in top left corner
+	Send("{h}") ;pressed h key
+	Sleep (2000)
+	ToolTip("Mouse over the Join Battle button, you have 5 seconds...", 0, 0) ; displays tooltip in top left corner
+	Sleep (5000)
+	$x = MouseGetPos() ;sets target to mouse position
+	$join = $x ;sets global variable
+	ToolTip("Join Battle button location set", 0, 0) ; displays tooltip in top left corner
+	Sleep (2000)
+	$bgnav = InputBox("Choose navigation options", "Y - Enable BG Navigation, N - Disable BG Navigation", "", "") 	
+	If $bgnav = "y" then
+		ToolTip("Please enter your battleground number...", 0, 0) ; displays tooltip in top left corner
+		Sleep (1000)
+		$bgnum = InputBox("Choose your Battleground", "1 - AV, 2 - AB, 3 - WG, 4 - EoTS, 5 - SotA, 6 - IoC,", "", "")
+		
+		If $bgnum = 1 Then
+			ToolTip("You have selected, Alterac Valley, beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		ElseIf $bgnum = 2 Then
+			ToolTip("You have selected, Arathi Basin, beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		ElseIf $bgnum = 3 Then
+			ToolTip("You have selected, Warson Gulch, beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		ElseIf $bgnum = 4 Then
+			ToolTip("You have selected, Eye of the Storm, beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		ElseIf $bgnum = 5 Then
+			ToolTip("You have selected, Strand of the Ancients,  beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		ElseIf $bgnum = 6 Then
+			ToolTip("You have selected, Isle of Conquest, beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		Else
+			ToolTip("You have selected nothing, beginning queing process", 0, 0) ; displays tooltip in top left corner
+			Sleep (2000)
+		EndIf
+	ElseIf $bgnav = "n" then
+		ToolTip("You have selected to disable BG Navigation", 0, 0) ; displays tooltip in top left corner
+		Sleep (2000)
+	EndIf
+	
+	ToolTip("Checking for deserter debuff...", 0, 0) ; displays tooltip in top left corner
+	$checkdebuff = InputBox("Debuff", "Do you have deserter debuff? y or n", "", "")
+	if $checkdebuff = "y" Then
+		Send("{h}")
+		debuff()
+	EndIf
+	
+	Send("{h}") ;pressed h key
+	Sleep(Random(1995,2130))
+	Queue()
+EndFunc
+
+;Queue function - queues for BG 
+Func Queue()
+	$recount = 0 
+	ToolTip("Beginning battleground script...", 0, 0) ; displays tooltip in top left corner
+	Sleep(Random(2015,2145))
+	ToolTip("Opening BG window...", 0, 0) ; displays tooltip in top left corner
+	Send("{h}") ;pressed h key
+	Sleep(Random(995,1145))
+	MouseMove ($join[0], $join[1]) ;move to area coordinates for join button
+	ToolTip("Queing for BG...", 0, 0) ; displays tooltip in top left corner
+	Sleep(Random(1005,1165))
+	MouseClick ("left")
+	Sleep(Random(990,1210))
+	ToolTip("Closing BG window...", 0, 0) ; displays tooltip in top left corner
+	Send("{h}") ;pressed h key
+	Sleep(Random(1005,1115))
+	Join()
+EndFunc
+
+;Join function - detects enter battle button and joins BG
+Func Join()
+	ToolTip("Waiting for BG to start", 0, 0) ; displays tooltip in top left corner
+	while 1=1
+		$coord = PixelSearch(450, 150, 800, 230, 0xE01308, 100) ;searches for color of join battleground button within 100 variations
+		If Not @error Then
+			MouseMove  ($coord[0], $coord[1]) ;move to area coordinates for join button
+			ToolTip("Joining BG", 0, 0) ; displays tooltip in top left corner
+			Sleep(Random(2015,2270))
+			MouseClick ("left")
+			ToolTip("Waiting for BG to load for 10 seconds...", 0, 0) ; displays tooltip in top left corner
+			Sleep (10000)
+			BG() ; call combat loop
+		EndIf
+	ToolTip("No Enter Battle button located, checking again in 5 seconds...", 0, 0) ; displays tooltip in top left corner
+	Sleep (5000)
+	Join()
+	WEnd
+EndFunc
+
+;Debuff Function - waits for 15 minutes before starting bot if you have the deserted debuff when starting the bot
+func debuff() 
+	ToolTip("Waiting 15 minutes for deserter debuff to leave", 0, 0)
+	Sleep (900000)
+	Queue()
+EndFunc
+
+;BG function - Navigates (if enabled) and runs anti-afk procedures, also detects death and BG end
+Func BG()
+	If $bgnav = "y" then
+	ToolTip("Beginning Nav procedure", 0, 0) ; displays tooltip in top left corner
+	Sleep(Random(1015,1175))
+	
+	;AV NAV CODE
+	If $bgnum = 1 Then
+		Send ("{left down}")
+		sleep (150)
+		Send ("{left up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		Sleep (2400)
+		Send ("{NUMLOCK}")
+		sleep (500)
+		Send ("{right down}")
+		sleep (205)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		Sleep (9000)
+		Send ("{NUMLOCK}")
+		ToolTip("Waiting for 1:45 before continuing Nav procedure...)", 0, 0) ; displays tooltip in top left corner
+		sleep (95000)
+		ToolTip("Commencing Nav routine...", 0, 0) ; displays tooltip in top left corner
+		Send ("{NUMLOCK}")	
+		Sleep (7000)
+		Send ("{left down}")
+		sleep (310)
+		Send ("{left up}")
+		sleep (25000)
+		Send ("{NUMLOCK}")
+		ToolTip("Nav routine complete...", 0, 0) ; displays tooltip in top left corner
+		sleep (2000)
+	
+	;AB NAV CODE	
+	ElseIf $bgnum = 2 Then
+		Send ("{NUMLOCK}")
+		Sleep (6000)
+		Send ("{NUMLOCK}")
+		sleep (500)
+		ToolTip("Waiting for 1:45 before continuing Nav procedure...)", 0, 0) ; displays tooltip in top left corner
+		sleep (95000) 
+		ToolTip("Co mmencing Nav routine...", 0, 0) ; displays tooltip in top left corner
+		Send ("{NUMLOCK}")	
+		Sleep (15000)
+		Send ("{NUMLOCK}") 
+		Sleep (500)		
+		Send ("{right down}")
+		sleep (480)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		sleep (20000) 
+		Send ("{NUMLOCK}") 
+		ToolTip("Nav routine complete...", 0, 0) ; displays tooltip in top left corner
+		sleep (2000)
+	
+	;WG NAV CODE
+	ElseIf $bgnum = 3 Then
+		Send ("{right down}")
+		sleep (150)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		Sleep (2200)
+		Send ("{NUMLOCK}")
+		sleep (500)
+		Send ("{left down}")
+		sleep (150)
+		Send ("{left up}")
+		ToolTip("Waiting for 1:45 before continuing Nav procedure...)", 0, 0) ; displays tooltip in top left corner
+		sleep (94000)
+		ToolTip("Commencing Nav routine...", 0, 0) ; displays tooltip in top left corner
+		send ("{left down}")
+		sleep (700)
+		send ("{left up}")
+		sleep (500)
+		Send ("{NUMLOCK}")	
+		Sleep (6000)
+		Send ("{NUMLOCK}")	
+		Sleep (500)
+		Send ("{right down}")
+		sleep (310)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		sleep (1500)
+		Send ("{NUMLOCK}")
+		sleep (500) 
+		
+	;EotS NAV CODE
+	ElseIf $bgnum = 4 Then
+		Send ("{NUMLOCK}")
+		Sleep (2200)
+		Send ("{NUMLOCK}")
+		sleep (500)
+		MouseMove (665,918)
+		MouseClick ("left")
+		ToolTip("Waiting for 1:45 before continuing Nav procedure...)", 0, 0) ; displays tooltip in top left corner
+		sleep (109000)
+		ToolTip("Commencing Nav routine...", 0, 0) ; displays tooltip in top left corner
+		send ("{left down}")
+		sleep (950)
+		send ("{left up}")
+		sleep (500)
+		Send ("{NUMLOCK}")	
+		Sleep (6000)
+		Send ("{NUMLOCK}")	
+		Sleep (500)
+		Send ("{right down}")
+		sleep (310)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		sleep (1500)
+		Send ("{NUMLOCK}")
+		sleep (500) 
+		MouseMove (1174,813) 
+		MouseClick ("left") 
+	
+	;SotA NAV CODE
+	ElseIf $bgnum = 5 Then
+		Send ("{right down}")
+		sleep (350)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		Sleep (7200)
+		Send ("{NUMLOCK}")
+		sleep (500)
+		Send ("{left down}")
+		sleep (350)
+		Send ("{left up}")
+		sleep (500)
+		Send ("{NUMLOCK}")	
+		Sleep (15000)
+		Send ("{NUMLOCK}")	
+		Sleep (500)
+		Send ("{right down}")
+		sleep (310)
+		Send ("{right up}")
+		sleep (500)
+	
+	;IoC NAV CODE
+	ElseIf $bgnum = 6 Then
+		Send ("{right down}")
+		sleep (350)
+		Send ("{right up}")
+		sleep (500)
+		Send ("{NUMLOCK}")
+		Sleep (16200)
+		Send ("{NUMLOCK}")
+		sleep (500)
+		Send ("{left down}")
+		sleep (350)
+		Send ("{left up}")
+		sleep (500)		
+		EndIf
+	EndIf
+	
+	while 1=1
+		$coord = PixelSearch(587, 206, 691, 215, 0xE01308, 100) ;searches for color of join battleground button within 100 variations
+		If Not @error Then
+			MouseMove  ($coord[0], $coord[1]) ;move to area coordinates for join button
+			ToolTip("Character has died, respawning", 0, 0) ; displays tooltip in top left corner
+			sleep (2000)
+			MouseClick ("left")
+			ToolTip("Waiting for BG to load for 10 seconds...", 0, 0) ; displays tooltip in top left corner
+			Sleep (10000)
+		EndIf
+		
+		$coord = PixelSearch(600, 675, 732, 678, 0x670000, 10) ;searches for color of leave battleground button within 10 variations
+		If Not @error Then
+			MouseMove  ($coord[0], $coord[1]) ;move to area coordinates for leave battleground button
+			ToolTip("BG has ended, re-starting queing process in 10 seconds", 0, 0) ; displays tooltip in top left corner
+			sleep (2000)
+			MouseClick ("left")
+			sleep (8000)
+			Queue() ; call combat loop
+		EndIf
+		
+	ToolTip("BG not over, commencing anti-afk...", 0, 0) ; displays tooltip in top left corner
+	Sleep(Random(1010,2020))
+	Send ("{SPACE}")
+	Sleep(Random(910,1130))
+		For $i = 29 to 1 Step -1
+			$recount = $recount+1 				; Global variable that is reset to 0 on Queue
+			if $recount = 2400 Then		; Counts to 40 minutes and restarts the Queue - for long BGs/if you've been kicked
+				Queue()
+			EndIf
+			ToolTip("Waiting 60 seconds to repeat routine... tick tock...    ( | )", 0, 0); displays tooltip in top left corner
+			Sleep (500)
+			ToolTip("Waiting 60 seconds to repeat routine... tick tock...    ( \ )", 0, 0); displays tooltip in top left corner
+			Sleep (500)
+			ToolTip("Waiting 60 seconds to repeat routine... tick tock...    ( | )", 0, 0); displays tooltip in top left corner
+			Sleep (500)
+			ToolTip("Waiting 60 seconds to repeat routine... tick tock...    ( / )", 0, 0); displays tooltip in top left corner
+			Sleep (500)
+		Next
+	WEnd
+EndFunc

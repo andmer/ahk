@@ -12,37 +12,39 @@ suspended:=true
 Reload
 Return
 
+~Enter::Suspend, Toggle
+~Esc::Suspend, Off
+
 #IfWinActive, ahk_class GxWindowClass
-     ~Return::
-     Suspend
-     if (!A_IsSuspended) 
-     {
-         suspended:=false
-     }
-     else 
-     {
-         suspended:=true
-     }
-     Return
-   $Esc::
-        Suspend Off
-        if (breakout2 = true)
-        {
-            Send {Escape}
-            ;Send {F12}
-            Return
-        }
-        breakout2:=true    
-        suspended:=false
-    Return
+    ;   ~Return::
+    ;   Suspend
+    ;   if (!A_IsSuspended) 
+    ;   {
+    ;       suspended:=false
+    ;   }
+    ;   else 
+    ;   {
+    ;       suspended:=true
+    ;   }
+    ;   Return
+    ; $Esc::
+    ;      Suspend Off
+    ;      if (breakout2 = true)
+    ;      {
+    ;          Send {Escape}
+    ;          Return
+    ;      }
+    ;      breakout2:=true    
+    ;      suspended:=false
+    ;  Return
 
 ~RButton & LButton::SpamKey2("f|2|3", "RButton")
 
 ; charge,intercept,execute,overpower,mortal strike,whirlwind
-$1::SpamKey("1")
+$1::SpamKey("6|f|1")
 $2::SpamKey("f|2")
-$3::SpamKey("f|2|3")
-$F::SpamKey("f|2|3")
+$3::SpamKey("f|3")
+$F::SpamKey("f")
 
 SpamKey(list) 
 {

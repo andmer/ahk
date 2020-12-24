@@ -1,63 +1,54 @@
 #NoEnv                       ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-SetControlDelay -1
-breakout:=false
+;SetControlDelay -1
 
 ^!r::Reload
 
-$Pause::
-Suspend, Off
-SplashTextOn, , , ACTIVE
-SetTimer, RemoveToolTip, -500
-Return
+$NumLock::SpamKeyLoop("{Space}")
 
-!Pause::
-Suspend, On
-SplashTextOn, , , PAUSED
-SetTimer, RemoveToolTip, -500
-Return
+RandSleep(x,y) {
+    Random, rand, %x%, %y%
+    Sleep %rand%
+}
 
-RemoveToolTip:
-SplashTextOff
-return
-
-;$ScrollLock::SpamKeyLoop("{Space}", "LButton")
-$ScrollLock::SpamKeyLoop("w|{Space}", "LButton")
-
-
-SpamKeyLoop(list,hotkey)
+SpamKeyLoop(list)
 {
-    WinGet, wowid, List, World of Warcraft 
-    Hotkey:=RegExReplace(hotkey,"^(\w* & |\W*)")
+    WinGet, wowid, List, World of Warcraft
+
     IfWinActive, ahk_class GxWindowClass
     {
         stringsplit, list, list,`|
         Counter:=0
-        global breakout:=false
         While, true {
-            If (breakout)
-            {
-                break
-            }
             Counter:=(Counter=list0) ? (1) : (Counter+1)
             key:=% list%counter%
             ControlSend,, {Blind}%key%, ahk_id %wowid1%
-	        ;Send,{Blind}%key%
-            if (counter = list0)
+            ControlSend,, {Blind}%key%, ahk_id %wowid2%
+
+            ;queue up
+            ;Click 398,532
+            
+            PixelGetColor, color, 398,532
+
+            PixelGetColor, color, 961, 292
+            if color = 0x00006F
             {
-                Sleep 30000
+                Click 885,201
             } 
-            else 
-            {
-                Sleep 0
-            }
+            ; Else
+            ; {
+            ;     MsgBox got %color%.
+            ; }                
+            ;ControlSend,, {Blind}0, ahk_id %wowid1%
+            ;ControlClick,,%wowid1%,,R,1,NA x450 y1000
+            ;Click 900,190
+            ;ControlClick, x900 y190, World Of Warcraft,,,, Pos
+            ;ControlClick,,%wowid1%,,R,1,NA x900 y190
+            ;ControlSend, ,{Click 900, 190},ahk_id %wowid1%
+            RandSleep(50 * 1000, 60 * 1000) ;sleep a random length of time			
+            ;Sleep, 5000
         }
-        Return
-    }
-    Else
-    {
-        Send {Blind}{%Hotkey%}
         Return
     }
 }
