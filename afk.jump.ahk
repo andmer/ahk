@@ -5,7 +5,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ^!r::Reload
 
-$NumLock::SpamKeyLoop("{Space}")
+$PgUp::SpamKeyLoop("{Space}")
 
 RandSleep(x,y) {
     Random, rand, %x%, %y%

@@ -109,23 +109,23 @@ SpamKey2(list,spam,hotkey)
 	;~RButton & LButton::SpamKey2("d|t|5|6|d|1|2|3|4", true, "RButton") ;ret
 */
     ;~RButton & LButton::SpamKey2("1|2|3|4", true, "RButton")
-    ~1::SpamKey("1|2",true)
-    ; ~2::SpamKey("1|2",true)
-	; ~3::SpamKey("6|6|6|5|2|z|3|3|3|1|4",true) ; prot
+    ~1::SpamKey("1",true)
+    ~2::SpamKey("2",true)
+	~3::SpamKey("3",true)
 
-     ~2::SpamKey("5|5|5|1|2|z|3|4",true) ; ret
-     ~3::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; ret
-     ~8::SpamKey("5|5|5|1|2|z|3|4",true) ; ret
-     ~9::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; ret
-     
-     ;~3::SpamKey("1|1|1|1|!2|2|2|2|3|4",true) ; arms
+    ; ~3::SpamKey("1|2|3|4|5|a",true) ; fury
+    ~8::SpamKey("1|2",true) ; arms
+    ~9::SpamKey("1|1|1|1|!2|2|2|2|3|4",true) ; arms
 
-     ;~3::SpamKey("1|2|3|4|5|a",true) ; fury
+    ;~3::SpamKey("6|6|6|5|2|z|3|3|3|1|4",true) ; prot  
+    ;~9::SpamKey("6|6|6|5|2|z|3|3|3|1|4",true) ; prot  
+
     
     ; ~2::SpamKey("!3|d|5|6|d|1|2|3|4",true)
-    ; ~3::SpamKey("1|1|1|1|!2|2|2|2|3|4",true)
     ; ~4::SpamKey("!3|d|5|6|d|1|2|3|4",true)
-
+    
+    
+    
     ~4::SpamKey("4",true)
     ~5::SpamKey("5",true)
     ~a::SpamKey("a",true)

@@ -113,23 +113,17 @@ SpamKey2(list,spam,hotkey)
     ; ~2::SpamKey("1|2",true)
 	; ~3::SpamKey("6|6|6|5|2|z|3|3|3|1|4",true) ; prot
 
-     ~2::SpamKey("5|5|5|1|2|z|3|4",true) ; ret
-     ~3::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; ret
-     ~8::SpamKey("5|5|5|1|2|z|3|4",true) ; ret
-     ~9::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; ret
-     
-     ;~3::SpamKey("1|1|1|1|!2|2|2|2|3|4",true) ; arms
+     ~2::SpamKey("5|5|5|1|2|3|z|4",true) ; ret
+     ~8::SpamKey("5|5|5|1|2|3|z|4",true) ; ret
 
-     ;~3::SpamKey("1|2|3|4|5|a",true) ; fury
-    
-    ; ~2::SpamKey("!3|d|5|6|d|1|2|3|4",true)
-    ; ~3::SpamKey("1|1|1|1|!2|2|2|2|3|4",true)
-    ; ~4::SpamKey("!3|d|5|6|d|1|2|3|4",true)
+     ~3::SpamKey("x|x|x|d|d|6|1|2|3|z|4",true) ; ret
+     ~9::SpamKey("x|x|x|d|d|6|1|2|3|z|4",true) ; ret
+     
 
     ~4::SpamKey("4",true)
     ~5::SpamKey("5",true)
     ~a::SpamKey("a",true)
-    ;~d::SpamKey("d",true)
+    ~d::SpamKey("d",true)
     ~z::SpamKey("z",true)
     ~x::SpamKey("x",true)
     ~r::SpamKey("r",true)
@@ -149,7 +143,7 @@ SpamKey2(list,spam,hotkey)
     $8 up::
     $9 up::
     $a up::
-    ;$d up::
+    $d up::
     $z up::
     $r up::
     $v up::
