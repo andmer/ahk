@@ -109,20 +109,13 @@ SpamKey2(list,spam,hotkey)
     ;~RButton & LButton::SpamKey2("!1|d|1|2|3|4", true, "RButton") ;ret
 	;~RButton & LButton::SpamKey2("d|t|5|6|d|1|2|3|4", true, "RButton") ;ret
 */
-    ;~RButton & mbutton::SpamKey2("x|x|x|d|d|6|1|2|3|z|4", true, "RButton")
+    ~RButton & mbutton::SpamKey2("1|2|3|4", true, "RButton")
     ~1::SpamKey("1",true)
-    ;~2::SpamKey("2",true)
-    ;~3::SpamKey("3",true)
+    ~2::SpamKey("2",true)
+    ~3::SpamKey("3",true)
 
-    ~2::SpamKey("5|5|5|1|2|3|z|4",true) ; ret
-    ~8::SpamKey("5|5|5|1|2|3|z|4",true) ; ret
-    ~3::SpamKey("d|d|d|d|1|2|3|z|4",true) ; ret
-    ~9::SpamKey("d|d|d|d|1|2|3|z|4",true) ; ret
-
-    ;~2::SpamKey("5|5|5|1|2|z|3|4",true) ; prot
     ;~8::SpamKey("5|5|5|1|2|z|3|4",true) ; prot
-    ;~3::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; prot
-    ;~9::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; prot
+    ;~9::SpamKey("1|2|3|4",true) ; prot
      
 
     ~4::SpamKey("4",true)
@@ -131,9 +124,9 @@ SpamKey2(list,spam,hotkey)
     ~d::SpamKey("d",true)
     ~z::SpamKey("z",true)
     ~x::SpamKey("x",true)
-    ~r::SpamKey("r",true)
+    ;~r::SpamKey("r",true)
     ~v::SpamKey("v",true)
-    ~f::SpamKey("f",true)
+    ;~f::SpamKey("f",true)
     ~!q::SpamKey("!q",true)
     ~!r::SpamKey("!r",true)
     ~!1::SpamKey("!1",true)
@@ -150,10 +143,10 @@ SpamKey2(list,spam,hotkey)
     $a up::
     $d up::
     $z up::
-    $r up::
+    ;$r up::
     $v up::
     $x up::
-    $f up::
+    ;$f up::
     breakout:=true
     breakout2:=true
     suspended:=false
