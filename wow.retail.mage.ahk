@@ -10,13 +10,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     ~F3::SpamKey("{F3}", true)
 
     ~8::SpamKey("8", true)
-    ~9::SpamKey("3|4", true)
+    ~9::SpamKey("3|3|3|4", true)
 
     ~0::SpamKey("0", true)
     ~1::SpamKey("1", true)
     ~2::SpamKey("2", true)
-    ~3::SpamKey("3", true)
-    ~4::SpamKey("4", true)
+    ~3::SpamKey("3|3|3|3|3|4", true)
+    ~4::SpamKey("3|3|3|3|3|4", true)
     ~5::SpamKey("5", true)
     ~a::SpamKey("a", true)
     ~d::SpamKey("d", true)
