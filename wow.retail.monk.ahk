@@ -5,11 +5,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Include %A_ScriptDir%\common.ahk
 
 #IfWinActive, ahk_class GxWindowClass
-
     ~1::SpamKey("1",true)
-
     ~2::SpamKey("2",true)
-
     ~3::SpamKey("3",true)
 
     ;~8::SpamKey("5|5|5|1|2|z|3|4",true) ; prot
