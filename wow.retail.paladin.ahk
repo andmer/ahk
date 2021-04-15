@@ -2,122 +2,17 @@
 SendMode Input               ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxThreadsPerHotkey 1
-
-global breakout:=false
-global breakout2:=false
-global suspended:=false
-
-*mbutton::
-breakout=true
-breakout2=true
-
-^!r::
-breakout:=true
-breakout2:=true
-suspended:=true
-Reload
-Return
-
-$Pause::
-Suspend, Off
-suspended:=false
-SplashTextOn, , , ACTIVE
-SetTimer, RemoveToolTip, -1000
-Return
-
-!Pause::
-Suspend, On
-suspended:=true
-SplashTextOn, , , PAUSED
-SetTimer, RemoveToolTip, -1000
-Return
-
-RemoveToolTip:
-SplashTextOff
-return
-
-SpamKey(list,spam)
-{
-    SpamKey2(list,spam,"")
-    Return
-}
-
-SpamKey2(list,spam,hotkey)
-{
-    WinGet, wowid, List, World of Warcraft
-    if (!hotkey)
-    {
-        ;SplashTextOn, , , hotkey
-        hotkey:=RegExReplace(A_ThisHotkey,"^(\w* & |\W*)")
-    }
-    IfWinActive, ahk_class GxWindowClass
-    {
-        stringsplit, list, list,`|
-        Counter:=0
-        breakout2:=false
-        While, GetKeyState(hotkey, "p") {
-            If (suspended)
-            {
-                Continue
-            }
-            If (breakout2)
-            {
-                break
-            }
-            Counter:=(Counter=list0) ? (1) : (Counter+1)
-            key:=% list%counter%
-            ;ControlSend,, {Blind}%key%, ahk_id %wowid1%
-            Send,%key%
-            if (counter = list0)
-            {
-                Sleep 50
-            }
-        }
-        Return
-    }
-    Else
-    {
-        Send {Blind}{%Hotkey%}
-        Return
-    }
-}
+#Include %A_ScriptDir%\common.ahk
 
 #IfWinActive, ahk_class GxWindowClass
-
-    ~/::
-    Suspend On
-    SplashTextOn, , , PAUSED
-    Return
-
-    ~Return::
-    Suspend
-    if (!A_IsSuspended)
-    {
-        suspended:=false
-        SetTimer, RemoveToolTip, -500
-    }
-    else
-    {
-        suspended:=true
-        SplashTextOn, , , PAUSED
-    }
-    Return
-
-/*
-    ;~RButton & LButton::SpamKey2("a|1|2|3|4|5", true, "RButton") ;fury
-    ;~RButton & LButton::SpamKey2("a|1|2|3|4|5", true, "RButton") ;fury
-    ;~RButton & LButton::SpamKey2("!1|d|1|2|3|4", true, "RButton") ;ret
-	;~RButton & LButton::SpamKey2("d|t|5|6|d|1|2|3|4", true, "RButton") ;ret
-*/
-    ;~RButton & mbutton::SpamKey2("x|x|x|d|d|6|1|2|3|z|4", true, "RButton")
     ~1::SpamKey("1",true)
-    ;~2::SpamKey("2",true)
-    ;~3::SpamKey("3",true)
+    ~4::SpamKey("4",true)
+    ~5::SpamKey("5",true)
 
     ~2::SpamKey("5|5|5|1|2|3|z|4",true) ; ret
+    ~3::SpamKey("d|d|d|d|1|2|3|4|z",true) ; ret
     ~8::SpamKey("5|5|5|1|2|3|z|4",true) ; ret
-    ~3::SpamKey("d|d|d|d|1|2|3|z|4",true) ; ret
-    ~9::SpamKey("d|d|d|d|1|2|3|z|4",true) ; ret
+    ~9::SpamKey("d|d|d|d|1|2|3|4|z",true) ; ret
 
     ;~2::SpamKey("5|5|5|1|2|z|3|4",true) ; prot
     ;~8::SpamKey("5|5|5|1|2|z|3|4",true) ; prot
@@ -125,8 +20,6 @@ SpamKey2(list,spam,hotkey)
     ;~9::SpamKey("x|x|x|d|d|1|2|z|3|4",true) ; prot
      
 
-    ~4::SpamKey("4",true)
-    ~5::SpamKey("5",true)
     ~a::SpamKey("a",true)
     ~d::SpamKey("d",true)
     ~z::SpamKey("z",true)
@@ -158,65 +51,4 @@ SpamKey2(list,spam,hotkey)
     breakout2:=true
     suspended:=false
     Return
-
-    $Esc::
-        Suspend Off
-        SetTimer, RemoveToolTip, -500
-        if (breakout = true)
-        {
-            Send {Escape}
-            ;Send {F12}
-            Return
-        }
-        breakout:=true
-        breakout2:=true
-    Return
-
-
-    /*
-    ~!RButton::
-        ;flag return spam
-        While GetKeyState("RButton","P"){
-            Click
-            Sleep 50
-        }
-    return
-    */
-
-Loop(list,hotkey)
-{
-    WinGet, wowid, List, World of Warcraft
-    Hotkey:=RegExReplace(hotkey,"^(\w* & |\W*)")
-    IfWinActive, ahk_class GxWindowClass
-    {
-        stringsplit, list, list,`|
-        Counter:=0
-        breakout:=false
-        While, true {
-            If (suspended)
-            {
-                Continue
-            }
-            If (breakout)
-            {
-                break
-            }
-            Counter:=(Counter=list0) ? (1) : (Counter+1)
-            key:=% list%counter%
-            ControlSend,, {Blind}%key%, ahk_id %wowid1%
-	        ;Send,%key%
-            if (counter = list0)
-            {
-                Sleep 50
-            }
-        }
-        Return
-    }
-    Else
-    {
-        Send {Blind}{%Hotkey%}
-        Return
-    }
-}
-
 #IfWinActive

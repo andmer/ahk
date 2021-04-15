@@ -15,14 +15,15 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     ~RButton & mbutton::SpamKey2("1|1|1|1|3|2|2|2|4|5", true, "RButton")
     ~1::SpamKey("1",true)
     ~2::SpamKey("2",true)
-	~3::SpamKey("3",true)
-    ;~8::SpamKey("1|4",true)
+	;~3::SpamKey("3",true)
+    ~8::SpamKey("1|4",true)
     
     ;~3::SpamKey("1|1|1|2|2|2|3|4|5",true) ; fury
+    ;~9::SpamKey("1|1|1|2|2|2|3|4|5",true) ; fury
     ;~9::SpamKey("2|2|2|3|1|4|5",true) ; fury
     
-    ;~3::SpamKey("1|1|1|1|3|2|2|2|4|5",true) ; arms
-    ~8::SpamKey("2|2|2|2|1|1|1|3|4|5",true) ; arms
+    ~3::SpamKey("1|1|1|1|3|2|2|2|4|5",true) ; arms
+    ;~8::SpamKey("2|2|2|2|1|1|1|3|4|5",true) ; arms
     ~9::SpamKey("1|1|1|1|2|2|2|3|4|5",true) ; arms
 
     ;~3::SpamKey("6|6|6|5|2|z|3|3|3|1|4",true) ; prot  
